@@ -15,3 +15,9 @@ Initial repository setup.
 - Continued project organization and refinement of structure.
 - Defined initial data flow for metals and calculator features.
 - Began outlining implementation approach for upcoming development phase.
+## Sprint 6 Update
+
+- Refined project architecture and clarified core module responsibilities.
+- Defined initial structure for metal calculator logic.
+- Expanded implementation roadmap for upcoming development phase.
+- Continued improving documentation clarity and organization.
