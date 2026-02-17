@@ -1,0 +1,17 @@
+[
+  {
+    "Name": "18K Gold",
+    "Purity": 0.75,
+    "PricePerGram": 250
+  },
+  {
+    "Name": "24K Gold",
+    "Purity": 1.0,
+    "PricePerGram": 250
+  },
+  {
+    "Name": "Sterling Silver",
+    "Purity": 0.93,
+    "PricePerGram": 3.2
+  }
+]

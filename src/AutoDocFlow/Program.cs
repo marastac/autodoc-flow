@@ -1,26 +1,71 @@
-﻿using AutoDocFlow.Models;
-using AutoDocFlow.Services;
+﻿using AutoDocFlow.Services;
+using System.Globalization;
 
-Console.WriteLine("=== AutoDoc Flow (Demo) ===");
+Console.WriteLine("=== AutoDoc Flow (Professional Demo) ===");
 
-// Datos “semilla” (demo). Luego puedes cambiarlos por lectura de JSON.
-var gold = new Metal("Gold", 250.00m);     // S/ por gramo (ejemplo)
-var silver = new Metal("Silver", 3.20m);   // S/ por gramo (ejemplo)
+// Permite usar punto o coma en decimales
+CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
 
-var gold18k = new Alloy("18K Gold", gold, 0.75m);
-var gold24k = new Alloy("24K Gold", gold, 1.00m);
-var sterling = new Alloy("Sterling Silver", silver, 0.925m);
+// Cargar metales desde archivo JSON
+var metals = MetalLoader.LoadMetals("src/AutoDocFlow/Data/metals.json");
 
-decimal weight = 10m; // 10 gramos (ejemplo)
-
-PrintValue(gold18k, weight);
-PrintValue(gold24k, weight);
-PrintValue(sterling, weight);
-
-Console.WriteLine("\nNext step: cargar datos desde un archivo JSON y agregar más calculadoras.");
-
-static void PrintValue(Alloy alloy, decimal grams)
+if (metals == null || metals.Count == 0)
 {
-    var value = PriceCalculator.CalculateEstimatedValue(alloy, grams);
-    Console.WriteLine($"{alloy} | Peso: {grams}g | Valor estimado: S/ {value:N2}");
+    Console.WriteLine("No metals were loaded. Please verify Data/metals.json exists and has valid data.");
+    return;
+}
+
+while (true)
+{
+    Console.WriteLine("\nMenu:");
+    Console.WriteLine("1) Show metal estimates (default 10g)");
+    Console.WriteLine("2) Calculate custom weight");
+    Console.WriteLine("3) Exit");
+    Console.Write("Choose an option: ");
+
+    var option = Console.ReadLine()?.Trim();
+
+    switch (option)
+    {
+        case "1":
+            ShowEstimates(metals, 10m);
+            break;
+
+        case "2":
+            Console.Write("\nEnter weight in grams (e.g., 10 or 10.5): ");
+            var input = Console.ReadLine()?.Trim();
+
+            // Acepta coma o punto
+            input = input?.Replace(",", ".");
+
+            if (decimal.TryParse(input, NumberStyles.Number, CultureInfo.InvariantCulture, out decimal weight) && weight > 0)
+            {
+                ShowEstimates(metals, weight);
+            }
+            else
+            {
+                Console.WriteLine("Invalid weight input. Please enter a positive number (e.g., 10 or 10.5).");
+            }
+            break;
+
+        case "3":
+            Console.WriteLine("\nGoodbye!");
+            return;
+
+        default:
+            Console.WriteLine("\nInvalid option. Try again.");
+            break;
+    }
+}
+
+// Método auxiliar profesional para mostrar cálculos
+void ShowEstimates(List<AutoDocFlow.Models.Metal> metals, decimal weight)
+{
+    Console.WriteLine($"\n--- Metal Estimates ({weight}g) ---");
+
+    foreach (var metal in metals)
+    {
+        decimal value = metal.CalculateValue(weight);
+        Console.WriteLine($"{metal.Name} | Weight: {weight}g | Est. Value: S/ {value:F2}");
+    }
 }
