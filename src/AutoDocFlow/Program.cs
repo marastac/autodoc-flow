@@ -3,10 +3,10 @@ using System.Globalization;
 
 Console.WriteLine("=== AutoDoc Flow (Professional Demo) ===");
 
-// Permite usar punto o coma en decimales
+// Allows the use of periods or commas in decimals
 CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
 
-// Cargar metales desde archivo JSON
+// Load metals from JSON file
 var metals = MetalLoader.LoadMetals("src/AutoDocFlow/Data/metals.json");
 
 if (metals == null || metals.Count == 0)
@@ -35,7 +35,7 @@ while (true)
             Console.Write("\nEnter weight in grams (e.g., 10 or 10.5): ");
             var input = Console.ReadLine()?.Trim();
 
-            // Acepta coma o punto
+            // Accepts comma or period
             input = input?.Replace(",", ".");
 
             if (decimal.TryParse(input, NumberStyles.Number, CultureInfo.InvariantCulture, out decimal weight) && weight > 0)
@@ -58,7 +58,7 @@ while (true)
     }
 }
 
-// Método auxiliar profesional para mostrar cálculos
+// Professional auxiliary method for displaying calculations
 void ShowEstimates(List<AutoDocFlow.Models.Metal> metals, decimal weight)
 {
     Console.WriteLine($"\n--- Metal Estimates ({weight}g) ---");

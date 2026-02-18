@@ -3,8 +3,8 @@ namespace AutoDocFlow.Models;
 public class Metal
 {
     public string Name { get; }
-    public decimal PricePerGram { get; }  // Precio por gramo
-    public decimal Purity { get; }        // Ejemplo: 0.75 para 18K
+    public decimal PricePerGram { get; }  // Price per gram
+    public decimal Purity { get; }        // Example: 0.75 for 18K
 
     public Metal(string name, decimal pricePerGram, decimal purity)
     {
